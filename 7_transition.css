@@ -1,0 +1,236 @@
+/* --- General Reset & Layout --- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+/* --- TOP HEADER (Red Bar) --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: red;
+    z-index: 1000;
+    border-bottom: 2px solid black;
+    /* Center the text vertically and horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header p {
+    color: black;
+    font-size: 3em;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* --- SIDEBAR NAVIGATION --- */
+#menuItems {
+    position: fixed;
+    top: 100px; /* Starts below the red header */
+    left: 0;
+    width: 200px; /* Fixed width sidebar */
+    height: calc(100% - 100px);
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto; /* Allows scrolling if menu gets too long */
+    z-index: 900;
+}
+
+/* Navigation Buttons Styling */
+#menuItems button {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    font-size: 1.2em;
+    padding: 15px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s;
+    display: block;
+}
+
+/* Req 5: Nav button hover background change */
+#menuItems button:hover {
+    background-color: #00008b; /* Dark Blue */
+}
+
+/* --- JUMP MENU (Recent Articles Dropdown) --- */
+/* This UL is inside the sidebar, between the buttons */
+#jumpMenu {
+    list-style-type: none; /* Remove bullets */
+    margin: 0;
+    padding: 0;
+    background-color: #DAA520; /* Goldenrod/Yellow */
+    width: 100%;
+    
+    /* Initially hidden */
+    max-height: 0;
+    overflow: hidden;
+    
+    /* Smooth reveal effect */
+    transition: max-height 0.5s ease-in-out;
+}
+
+/* Req 6: Hovering 'Recent Articles' (#recentArticles) reveals the menu next to it */
+/* We use the adjacent sibling selector (+) because the UL comes right after the button */
+#recentArticles:hover + #jumpMenu {
+    max-height: 500px; /* Large enough to show all items */
+}
+
+/* Keep the menu open when hovering over the menu itself */
+#jumpMenu:hover {
+    max-height: 500px;
+}
+
+/* Req 7: Link Styling in Jump Menu */
+#jumpMenu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: blue;
+    font-size: 1.1em;
+    text-align: center;
+    border-bottom: 1px solid #b8860b;
+}
+
+/* Req 7: Hover over link changes font and background color */
+#jumpMenu li a:hover {
+    background-color: #f0e68c; /* Lighter yellow */
+    color: red; 
+}
+
+/* --- MAIN CONTENT AREA --- */
+main {
+    margin-left: 220px; /* Sidebar width + 20px gap */
+    margin-top: 120px;  /* Header height + 20px gap */
+    padding-right: 20px;
+    padding-bottom: 100px; /* Space for footer/thanks box */
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    font-family: 'Times New Roman', serif;
+    margin-bottom: 50px;
+}
+
+/* Grid Container */
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+/* --- ARTICLE STYLING --- */
+article {
+    width: 22%; /* Approx 4 columns */
+    min-width: 250px;
+    margin-bottom: 50px;
+    padding: 15px;
+    background-color: white; /* Ensure readability */
+    
+    /* Req 3: Light text initially */
+    color: #bbb; 
+    
+    /* Req 4: Transition to original state over 2 seconds */
+    transition: all 2s ease;
+    
+    transform-origin: center;
+}
+
+article h2 {
+    font-size: 1.5em;
+    color: #ddd; /* Light title initially */
+    transition: color 2s ease;
+}
+
+/* Req 1: First letter Drop Cap */
+article p:first-of-type::first-letter {
+    font-family: 'Times New Roman', serif;
+    font-size: 36px;
+    float: left;
+    line-height: 0.8;
+    padding-right: 5px;
+    padding-top: 5px;
+    color: inherit; /* Matches text color */
+}
+
+article p {
+    text-align: justify;
+    line-height: 1.5;
+}
+
+/* Req 3: Hover Effect (Darker, Expands) */
+article:hover {
+    color: #000; /* Text becomes dark */
+    transform: scale(1.15); /* Zoom effect */
+    z-index: 50;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Optional: adds depth */
+}
+
+article:hover h2 {
+    color: #333;
+}
+
+/* --- LINKS AND ARROWS --- */
+article p a {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Req 2: Arrow pointing to the right for Google links */
+/* Using "Attribute Selector" to target links going to google */
+a[href*="google.com"]::after {
+    content: "\2197"; /* Unicode for North East Arrow (Wikipedia style) */
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 1.2em;
+    border: 1px solid blue;
+    padding: 0 2px;
+    line-height: 1;
+}
+
+/* --- THANK YOU BLOCK --- */
+#thanks {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: #87CEEB; /* Sky blue */
+    margin: 0;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    z-index: 2000;
+}
+
+#thanks a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+/* Hide footer based on screenshot layout preference, 
+   or style it simply if you want it visible */
+footer {
+    display: none; 
+}
